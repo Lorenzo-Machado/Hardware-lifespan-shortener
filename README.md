@@ -23,4 +23,4 @@ this creates heavy random disk I/O.
 it maximizes disk usage and I/O latency.
 useful for disk stress testing. 
 
-By now it only works on windows, will work on linux compatible version in a near future.
+By now it only works on windows, i will work on a linux compatible version in a near future.
