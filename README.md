@@ -1,4 +1,4 @@
-# StressReliever
+# HARDWARE LIFESPAN SHORTENER
 An idiotic piece software made by me in C, it's one and only function in this world is to shorten your hardware lifespan.
 It will stress your:
 -CPU
@@ -23,4 +23,4 @@ this creates heavy random disk I/O.
 it maximizes disk usage and I/O latency.
 useful for disk stress testing. 
 
-By now it only works on windows, i will work on a linux compatible version in a near future.
+For now, it only have a CLI version, i will work on a GUI version on a near future... maybe when Half-Life 3 releases.
