@@ -4,6 +4,8 @@
 ![Licença](https://img.shields.io/badge/License-Do%20What%20The%20Fuck%20You%20Want-green)
 ![Saúde](https://img.shields.io/badge/Your%20PC's%20Health-At%20Risk-orange)
 </br>
+![pconfireboii](https://c.tenor.com/hEwfEcj2R60AAAAd/tenor.gif)
+</br>
 An idiotic piece of software made by me in C, its one and only function in this world is to shorten your hardware lifespan.
 It will stress your CPU, SSD and RAM, i will work on a GPU stresser soon. 
 Both Linux and Windows verion do the same thing essentially, with some differences which i will explain.
