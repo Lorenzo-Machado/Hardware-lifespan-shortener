@@ -1,26 +1,79 @@
 # HARDWARE LIFESPAN SHORTENER
+![Linguagem](https://img.shields.io/badge/Language-C-blue)
+![Plataforma](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-red)
+![Licença](https://img.shields.io/badge/License-Do%20What%20The%20Fuck%20You%20Want-green)
+![Saúde](https://img.shields.io/badge/Your%20PC's%20Health-At%20Risk-orange)
+</br>
 An idiotic piece software made by me in C, it's one and only function in this world is to shorten your hardware lifespan.
-It will stress your:
--CPU
-the max_cpu() function stresses the CPU by creating one thread per logical processor available on the system.
-Each thread runs at the same time and executes CPU-intensive work, keeping all CPU cores busy.
-As a result, the processor usage can reach close to 100% on all cores, which puts maximum load on the CPU.
+It will stress your CPU, SSD and RAM, i will work on a GPU stresser soon. 
+Both Linux and Windows verion do the same thing essencially, with some differences which i will explain.
+theres how it stresses your shit<br/><br/>
+WINDOWS VERSION<br/>
+<br/>
+-- CPU --<br/>
+it stresses your CPU mainly using this math function
+```
+while(1) {
+    double r = 0.0;
+    for(int i = 0; i < 1000000; i++) 
+        r += sin((double)i) * cos((double)i);
+}
+```
+tf this does?</br>
+creates an infinite loop performing heavy mathematical calculations using sin() and cos() functions (which are among the most computationally expensive operations)</br>
+Creates one thread per CPU core (detected via GetSystemInfo())
+</br></br>
+-- RAM --
+the code snippet that tries to destroy your ram is
+```
+DWORD WINAPI mem_thread(LPVOID p) {
+    mem_ctx* ctx = (mem_ctx*)p;
+    while(ctx->count < 5000) {
+        char* b = (char*)VirtualAlloc(NULL, ctx->size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+        if(b) {
+            for(int i = 0; i < ctx->size; i += 4096) b[i] = (char)(i % 256);
+            ctx->blocks[ctx->count++] = b;
+        } else break;
+    }
+    return 0;
+}
+void max_ram() {
+    int tc = 2; 
+    int mb = 1024; 
+    int sz = mb * 1024 * 1024;
+    HANDLE th[8];
+    mem_ctx ctxs[8];
+    for(int i = 0; i < tc; i++) {
+        ctxs[i].count = 0;
+        ctxs[i].size = sz;
+        th[i] = CreateThread(NULL, 0, mem_thread, &ctxs[i], 0, NULL);
+    }
+}
+```
+now you may ask what this does, it's pretty simple actually</br>
+it allocates 1GB memory blocks repeatedly using VirtualAlloc()</br>
+fills each allocated block with data (writing to every 4096th byte) and it runs 2 parallel threads during this allocation 
+</br></br>
 
--RAM
-the max_ram() function stresses system memory by creating multiple threads that continuously allocate large memory blocks.
-Each thread allocates 1 GB of memory at a time using VirtualAlloc and writes to each memory page, forcing the operating system to commit physical RAM. The allocations continue until memory can no longer be allocated.
-running multiple threads in parallel increases memory pressure faster, leading to very high RAM usage and possible paging.
+-- STORAGE --</br></br>
+and finally for the storage
+```
+while(1) {
+    SetFilePointerEx(fh, random_position, NULL, FILE_BEGIN);
+    WriteFile(fh, buf, 4096, &bw, NULL);
+    FlushFileBuffers(fh);  // Forces immediate physical write
+}
 
--SSD/HDD
-for the storage, the code stresses the disk by running multiple read and write threads in parallel.
-writer threads continuously write 4 KB blocks of random data at random file positions.
-each write is flushed immediately, forcing real disk writes.
-reader threads repeatedly read 4 KB blocks from random file offsets.
-unbuffered I/O is used to bypass the operating system cache.
-data is accessed after reading to ensure the disk read actually occurs.
-reads and writes happen at the same time.
-this creates heavy random disk I/O.
-it maximizes disk usage and I/O latency.
-useful for disk stress testing. 
-
+// Read thread:
+while(1) {
+    SetFilePointerEx(fh, random_position, NULL, FILE_BEGIN);
+    ReadFile(fh, buf, 4096, &br, NULL);
+}
+```
+it writes and reads 4KB blocks at random positions</br>
+uses FILE_FLAG_NO_BUFFERING and FILE_FLAG_WRITE_THROUGH to bypass OS cache
+</br></br></br>
+**BEWARE**
+</br>
+ONLY USE THIS SOFTWARE IF YOU KNOW WHAT YOU DOING I DO NOT TAKE ANY RESPOSABILITY OF ANY DAMAGE THIS MAY CAUSE
 For now, it only have a CLI version, i will work on a GUI version on a near future... maybe when Half-Life 3 releases.
