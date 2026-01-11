@@ -29,7 +29,13 @@ void max_cpu() {
     
     for(int i = 0; i < tc && i < 64; i++) {
         ids[i] = i;
-        pthread_create(&th[i], NULL, cpu_thread, &ids[i]);
+        if(pthread_create(&th[i], NULL, cpu_thread, &ids[i]) != 0) {
+            perror("pthread_create cpu");
+        }
+    }
+    
+    for(int i = 0; i < tc && i < 64; i++) {
+        pthread_detach(th[i]);
     }
 }
 
@@ -189,4 +195,5 @@ int main(int argc, char* argv[]) {
     }
     
     return 0;
+
 }
