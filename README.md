@@ -6,6 +6,8 @@
 </br>
 ![pconfireboii](https://c.tenor.com/hEwfEcj2R60AAAAd/tenor.gif)
 </br>
+</br><sup>"The perfect software to test your warranty provider's patience"</sup></br>
+**-Torvalds, Linus**</br></br>
 An idiotic piece of software made by me in C, its one and only function in this world is to shorten your hardware lifespan.
 It will stress your CPU, SSD and RAM, i will work on a GPU stresser soon. 
 Both Linux and Windows verion do the same thing essentially, with some differences which i will explain.
